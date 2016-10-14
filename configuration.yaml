@@ -36,6 +36,26 @@ logbook:
 # Track the sun
 sun:
 
-# Weather Prediction
 sensor:
-  platform: yr
+# Weather Prediction
+  - platform: yr
+  - platform: ha02
+    i2c_port: 6
+  - platform: grove_light
+    port: 1
+
+switch:
+    - platform: mraa_gpio
+      ports:
+          6: 'chauffage'
+
+climate:
+  - platform: generic_thermostat
+    name: Home
+    heater: switch.chauffage
+    target_sensor: sensor.temperature
+    min_temp: 18
+    max_temp: 27
+    target_temp: 23
+    min_cycle_duration:
+      seconds: 60

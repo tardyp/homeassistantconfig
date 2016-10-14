@@ -1,5 +1,7 @@
+__pycache__
 secrets.yaml
 *~
 *.log
 deps/
 *.db
+*.db-journal
