@@ -5,9 +5,7 @@ import voluptuous as vol
 from homeassistant.components.climate import (ATTR_TARGET_TEMP_HIGH,
                                               ATTR_TARGET_TEMP_LOW,
                                               PLATFORM_SCHEMA, ClimateDevice)
-from homeassistant.const import (ATTR_TEMPERATURE, ATTR_UNIT_OF_MEASUREMENT,
-                                 CONF_PLATFORM, CONF_SCAN_INTERVAL, STATE_OFF,
-                                 STATE_ON, TEMP_CELSIUS, TEMP_FAHRENHEIT)
+from homeassistant.const import ATTR_TEMPERATURE, TEMP_CELSIUS
 
 base_cmd = [
     0x1, 0x10, 0x30, 0x40, 0xBF, 0x1, 0xFE, 0x11, 0x12, 0x1, 0x3, 0x20,
