@@ -60,6 +60,9 @@ class Th02Sensor(Entity):
         temperature |= self._sensor.readReg(TH02_REG_DATA_L)
         temperature = temperature >> 2
         temperature = (temperature / 32) - 50
+        if temperature < 0 and temperature > 40:
+            # probably bad read
+            return None
         return temperature
 
     def get_humidity(self):
@@ -79,8 +82,11 @@ class Th02Sensor(Entity):
 
     def update(self):
         """Get the latest data from the TH02 and updates the states."""
-        if self.type == SENSOR_HUMIDITY:
-            self._state = self.get_humidity()
+        try:
+            if self.type == SENSOR_HUMIDITY:
+                self._state = self.get_humidity()
 
-        if self.type == SENSOR_TEMPERATURE:
-            self._state = self.get_temp()
+            if self.type == SENSOR_TEMPERATURE:
+                self._state = self.get_temp()
+        except Exception:
+            self._state = None

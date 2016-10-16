@@ -18,11 +18,6 @@ http:
   # Uncomment this to add a password (recommended!)
   api_password: !secret http_password
 
-# Checks for available updates
-updater:
-
-# Discover some devices automatically
-discovery:
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
@@ -50,12 +45,13 @@ switch:
           6: 'chauffage'
 
 climate:
-  - platform: generic_thermostat
-    name: Home
-    heater: switch.chauffage
-    target_sensor: sensor.temperature
+  - platform: hitachi_thermostat
+    name: AC
     min_temp: 18
     max_temp: 27
     target_temp: 23
-    min_cycle_duration:
-      seconds: 60
+    away: true
+    aux: false
+    fan_mode: Auto Low
+    swing_mode: Auto
+    ac_mode: heat
