@@ -45,7 +45,7 @@ switch:
           6: 'chauffage'
 
 climate:
-  - platform: hitachi_thermostat
+  - platform: hitachi_ac
     name: AC
     min_temp: 18
     max_temp: 27

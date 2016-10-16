@@ -39,11 +39,11 @@ CONF_MAX_TEMP = 'max_temp'
 
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
-    vol.Optional(CONF_AC_MODE): cv.boolean,
+    vol.Optional(CONF_AC_MODE): cv.string,
     vol.Optional(CONF_AWAY): cv.boolean,
     vol.Optional(CONF_AUX): cv.boolean,
-    vol.Optional(CONF_FAN_MODE): cv.integer,
-    vol.Optional(CONF_SWING_MODE): cv.integer,
+    vol.Optional(CONF_FAN_MODE): cv.string,
+    vol.Optional(CONF_SWING_MODE): cv.string,
     vol.Optional(CONF_MAX_TEMP): vol.Coerce(float),
     vol.Optional(CONF_MIN_TEMP): vol.Coerce(float),
     vol.Optional(CONF_TARGET_TEMP): vol.Coerce(float),
@@ -89,9 +89,10 @@ class HitachiThermostat(ClimateDevice):
         self._swing_list = ["Auto", "1", "2", "3", "Off"]
         self._target_temperature_high = target_temp_high
         self._target_temperature_low = target_temp_low
-        self.powerfull = 0
+        self.powerful = 0
         self.eco = 0
         self.init_mraa()
+        self.run_cmd()
 
     def init_mraa(self):
         # mraa will make sure the Pwm is configured properly
@@ -111,7 +112,7 @@ class HitachiThermostat(ClimateDevice):
     def create_cmd(self):
         buf = base_cmd[:]
         c = 0xc2
-        buf[11] = self._target_temperature << 1
+        buf[11] = int(self._target_temperature) << 1
         ventilation = self._fan_list.index(self._current_fan_mode)
         buf[13] = ventilation + 1
         mode = self._operation_list.index(self._current_operation) + 3
@@ -123,7 +124,7 @@ class HitachiThermostat(ClimateDevice):
         if (self._away):
             buf[19] = 0x0
 
-        for i in xrange(27):
+        for i in range(27):
             c = (c + buf[i]) & 0xff
 
         c = 0xff ^ (c - 1)
@@ -147,6 +148,11 @@ class HitachiThermostat(ClimateDevice):
     def name(self):
         """Return the name of the climate device."""
         return self._name
+
+    @property
+    def unit_of_measurement(self):
+        """Return the unit of measurement."""
+        return self._unit_of_measurement
 
     @property
     def temperature_unit(self):
