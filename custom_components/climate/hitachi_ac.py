@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 import homeassistant.helpers.config_validation as cv
-import mraa
 import voluptuous as vol
 from homeassistant.components.climate import (ATTR_TARGET_TEMP_HIGH,
                                               ATTR_TARGET_TEMP_LOW,
                                               PLATFORM_SCHEMA, ClimateDevice)
 from homeassistant.const import ATTR_TEMPERATURE, TEMP_CELSIUS
+
+import mraa
 
 base_cmd = [
     0x1, 0x10, 0x30, 0x40, 0xBF, 0x1, 0xFE, 0x11, 0x12, 0x1, 0x3, 0x20,
@@ -85,8 +86,8 @@ class HitachiThermostat(ClimateDevice):
         self._fan_list = ["On Low", "On High", "Auto Low", "Auto High", "Off"]
         self._operation_list = ["heat", "cool", "dry"]
         self._swing_list = ["Auto", "1", "2", "3", "Off"]
-        self._target_temperature_high = target_temp_high
-        self._target_temperature_low = target_temp_low
+        self._max_temp = target_temp_high
+        self._min_temp = target_temp_low
         self.powerful = 0
         self.eco = 0
         self.init_mraa()
@@ -131,11 +132,11 @@ class HitachiThermostat(ClimateDevice):
 
     def run_cmd(self):
         buf = self.create_cmd()
-        try:
-            with open("/dev/ttymcu0", "w") as f:
-                f.write("IRCODE" + buf + "\n")
-        except Exception as e:
-            print("cannot write cmd", e)
+        # try:
+        #     with open("/dev/ttymcu0", "w") as f:
+        #         f.write("IRCODE" + buf + "\n")
+        # except Exception as e:
+        #     print("cannot write cmd", e)
 
     @property
     def should_poll(self):
@@ -168,14 +169,14 @@ class HitachiThermostat(ClimateDevice):
         return self._target_temperature
 
     @property
-    def target_temperature_high(self):
+    def max_temp(self):
         """Return the highbound target temperature we try to reach."""
-        return self._target_temperature_high
+        return self._max_temp
 
     @property
-    def target_temperature_low(self):
+    def min_temp(self):
         """Return the lowbound target temperature we try to reach."""
-        return self._target_temperature_low
+        return self._min_temp
 
     @property
     def current_operation(self):
@@ -212,10 +213,6 @@ class HitachiThermostat(ClimateDevice):
         if kwargs.get(ATTR_TEMPERATURE) is not None:
             self._target_temperature = kwargs.get(ATTR_TEMPERATURE)
             self.run_cmd()
-        if kwargs.get(ATTR_TARGET_TEMP_HIGH) is not None and \
-           kwargs.get(ATTR_TARGET_TEMP_LOW) is not None:
-            self._target_temperature_high = kwargs.get(ATTR_TARGET_TEMP_HIGH)
-            self._target_temperature_low = kwargs.get(ATTR_TARGET_TEMP_LOW)
         self.update_ha_state()
 
     def set_humidity(self, humidity):

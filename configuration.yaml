@@ -39,10 +39,8 @@ sensor:
   - platform: grove_light
     port: 1
 
-switch:
-    - platform: mraa_gpio
-      ports:
-          6: 'chauffage'
+device_tracker:
+  - platform: locative
 
 climate:
   - platform: hitachi_ac
@@ -55,3 +53,7 @@ climate:
     fan_mode: Auto Low
     swing_mode: Auto
     ac_mode: heat
+switch:
+  - platform: mraa_gpio
+    ports:
+          6: 'chauffage'
