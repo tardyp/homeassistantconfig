@@ -25,6 +25,11 @@ conversation:
 # Enables support for tracking state changes over time.
 history:
 
+
+influxdb:
+    host: 127.0.0.1
+    username: home-assistant
+    password: password
 # View all events in a logbook
 logbook:
 
@@ -34,10 +39,13 @@ sun:
 sensor:
 # Weather Prediction
   - platform: yr
+    scan_interval: 120
   - platform: ha02
     i2c_port: 6
+    scan_interval: 120
   - platform: grove_light
     port: 1
+    scan_interval: 120
 
 device_tracker:
   - platform: locative
