@@ -42,6 +42,10 @@ sensor:
         arg: /
       - type: memory_free
       - type: processor_use
+      - type: network_in
+      - type: network_out
+  - platform: cpuspeed
+    scan_interval: 10
 
 device_tracker:
   - platform: locative
