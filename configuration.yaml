@@ -47,9 +47,9 @@ sensor:
       - type: network_out
         arg: wlan0
       - type: network_in
-        arg: lo0
+        arg: lo
       - type: network_out
-        arg: lo0
+        arg: lo
   - platform: cpuspeed
     scan_interval: 10
 
