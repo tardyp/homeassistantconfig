@@ -43,7 +43,13 @@ sensor:
       - type: memory_free
       - type: processor_use
       - type: network_in
+        arg: wlan0
       - type: network_out
+        arg: wlan0
+      - type: network_in
+        arg: lo0
+      - type: network_out
+        arg: lo0
   - platform: cpuspeed
     scan_interval: 10
 
