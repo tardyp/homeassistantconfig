@@ -46,6 +46,7 @@ sensor:
 device_tracker:
   - platform: locative
   - platform: bluetooth_tracker
+    scan_interval: 240
 
 climate:
   - platform: hitachi_ac
