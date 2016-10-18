@@ -18,23 +18,10 @@ http:
   # Uncomment this to add a password (recommended!)
   api_password: !secret http_password
 
-
-# Allows you to issue voice commands from the frontend in enabled browsers
-conversation:
-
-# Enables support for tracking state changes over time.
-history:
-
-
 influxdb:
     host: 127.0.0.1
     username: home-assistant
     password: password
-# View all events in a logbook
-logbook:
-
-# Track the sun
-sun:
 
 sensor:
 # Weather Prediction
@@ -46,10 +33,20 @@ sensor:
   - platform: grove_light
     port: 1
     scan_interval: 120
+  - platform: systemmonitor
+    scan_interval: 10
+    resources:
+      - type: disk_use_percent
+        arg: /home
+      - type: disk_use_percent
+        arg: /
+      - type: memory_free
+      - type: processor_use
 
 device_tracker:
   - platform: locative
   - platform: bluetooth_tracker
+
 climate:
   - platform: hitachi_ac
     name: AC
