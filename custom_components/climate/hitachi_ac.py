@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
+
+import homeassistant.helpers.config_validation as cv
+import mraa
 from homeassistant.components.climate import (ATTR_TARGET_TEMP_HIGH,
                                               ATTR_TARGET_TEMP_LOW,
                                               PLATFORM_SCHEMA, ClimateDevice)
 from homeassistant.const import ATTR_TEMPERATURE, TEMP_CELSIUS
-
-import mraa
 
 base_cmd = [
     0x1, 0x10, 0x30, 0x40, 0xBF, 0x1, 0xFE, 0x11, 0x12, 0x1, 0x3, 0x20,
@@ -149,7 +149,7 @@ class HitachiThermostat(ClimateDevice):
         return self._name
 
     @property
-    def temperature_unit(self):
+    def unit_of_measurement(self):
         """Return the unit of measurement."""
         return self._unit_of_measurement
 
