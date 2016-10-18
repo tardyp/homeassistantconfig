@@ -49,7 +49,7 @@ sensor:
 
 device_tracker:
   - platform: locative
-
+  - platform: bluetooth_tracker
 climate:
   - platform: hitachi_ac
     name: AC
