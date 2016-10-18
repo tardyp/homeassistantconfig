@@ -1,0 +1,28 @@
+
+3bede4f65670061f:
+  name: Pierre
+  mac: 
+  gravatar: tardyp@gmail.com
+  track: yes
+  hide_if_away: no
+
+e4a5104b75432d5:
+  name: Flo
+  mac: 
+  picture: https://lh5.googleusercontent.com/-OYRGXa9a4H0/AAAAAAAAAAI/AAAAAAAAAAA/gKl767-qxaQ/w80-h80/photo.jpg
+  track: yes
+  hide_if_away: no
+
+sl78h:
+  name: SL78H
+  mac: BT_7C:2F:80:0F:33:8E
+  picture: 
+  track: no
+  hide_if_away: no
+
+nexus_player:
+  name: Nexus Player
+  mac: BT_F0:79:59:13:C4:2C
+  picture: 
+  track: no
+  hide_if_away: no
