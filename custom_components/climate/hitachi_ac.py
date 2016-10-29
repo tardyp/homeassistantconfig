@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-import voluptuous as vol
-
 import homeassistant.helpers.config_validation as cv
 import mraa
+import voluptuous as vol
 from homeassistant.components.climate import (ATTR_TARGET_TEMP_HIGH,
                                               ATTR_TARGET_TEMP_LOW,
                                               PLATFORM_SCHEMA, ClimateDevice)
@@ -121,7 +120,7 @@ class HitachiThermostat(ClimateDevice):
         if (self.eco):
             buf[25] = 0x02
         if (self._away):
-            buf[19] = 0x0
+            buf[17] = 0x0
 
         for i in range(27):
             c = (c + buf[i]) & 0xff
@@ -132,11 +131,11 @@ class HitachiThermostat(ClimateDevice):
 
     def run_cmd(self):
         buf = self.create_cmd()
-        # try:
-        #     with open("/dev/ttymcu0", "w") as f:
-        #         f.write("IRCODE" + buf + "\n")
-        # except Exception as e:
-        #     print("cannot write cmd", e)
+        try:
+            with open("/dev/ttymcu0", "w") as f:
+                f.write("IRCODE" + buf + "\n")
+        except Exception as e:
+            print("cannot write cmd", e)
 
     @property
     def should_poll(self):
