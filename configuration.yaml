@@ -53,22 +53,17 @@ sensor:
   - platform: cpuspeed
     scan_interval: 10
 
-device_tracker:
-  - platform: locative
-  - platform: bluetooth_tracker
-    scan_interval: 240
-
-climate:
-  - platform: hitachi_ac
-    name: AC
-    min_temp: 18
-    max_temp: 27
-    target_temp: 23
-    away: true
-    aux: false
-    fan_mode: Auto Low
-    swing_mode: Auto
-    ac_mode: heat
+# climate:
+#   - platform: hitachi_ac
+#     name: AC
+#     min_temp: 18
+#     max_temp: 27
+#     target_temp: 23
+#     away: true
+#     aux: false
+#     fan_mode: Auto Low
+#     swing_mode: Auto
+#     ac_mode: heat
 switch:
   - platform: mraa_gpio
     ports:
