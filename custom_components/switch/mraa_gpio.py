@@ -72,10 +72,11 @@ class MRAAGPIOSwitch(ToggleEntity):
         """Turn the device on."""
         self._gpio.write(0 if self._invert_logic else 1)
         self._state = True
-        self.update_ha_state()
+        self.schedule_update_ha_state()
 
     def turn_off(self):
         """Turn the device off."""
         self._gpio.write(1 if self._invert_logic else 0)
         self._state = False
-        self.update_ha_state()
+        self.schedule_update_ha_state()
+
