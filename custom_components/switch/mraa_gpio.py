@@ -9,6 +9,7 @@ import voluptuous as vol
 from homeassistant.components.switch import PLATFORM_SCHEMA
 from homeassistant.const import DEVICE_DEFAULT_NAME
 from homeassistant.helpers.entity import ToggleEntity
+from timeit import default_timer as timer
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -51,6 +52,7 @@ class MRAAGPIOSwitch(ToggleEntity):
         self._state = False
         self._gpio = mraa.Gpio(self._port)
         self._gpio.dir(mraa.DIR_OUT)
+        self.last_update = timer()
         self._gpio.write(1 if self._invert_logic else 0)
 
     @property
@@ -68,15 +70,24 @@ class MRAAGPIOSwitch(ToggleEntity):
         """Return true if device is on."""
         return self._state
 
+    def debounce(self):
+        now = timer()
+        if now - self.last_update < 10:
+            return False
+        self.last_update = now
+        return True
+
     def turn_on(self):
         """Turn the device on."""
-        self._gpio.write(0 if self._invert_logic else 1)
-        self._state = True
-        self.schedule_update_ha_state()
+        if self.debounce():
+            self._gpio.write(0 if self._invert_logic else 1)
+            self._state = True
+            self.schedule_update_ha_state()
 
     def turn_off(self):
         """Turn the device off."""
-        self._gpio.write(1 if self._invert_logic else 0)
-        self._state = False
-        self.schedule_update_ha_state()
+        if self.debounce():
+            self._gpio.write(1 if self._invert_logic else 0)
+            self._state = False
+            self.schedule_update_ha_state()
 
