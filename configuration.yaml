@@ -20,8 +20,8 @@ http:
 
 influxdb:
     host: 127.0.0.1
-    username: home-assistant
-    password: password
+    username: homeassistant
+    password:  !secret influx_password
 
 sensor:
 # Weather Prediction
