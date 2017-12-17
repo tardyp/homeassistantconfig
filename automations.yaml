@@ -2,12 +2,35 @@
   - data:
       entity_id: switch.chauffage
     service: switch.turn_on
-  alias: Allumer chauffage
+  alias: Allumer chauffage a 7h
   condition:
   - below: '15'
     condition: numeric_state
     entity_id: sensor.yr_temperature
   id: '1513505624850'
   trigger:
+  - at: '07:00:00'
+    platform: time
+- action:
+  - data:
+      entity_id: switch.chauffage
+    service: switch.turn_off
+  alias: Eteindre chauffage a 23h
+  id: '1513505624851'
+  trigger:
   - at: '11:36:00'
     platform: time
+- action:
+  - data:
+      entity_id: switch.chauffage
+    service: switch.turn_off
+  alias: Eteindre chauffage quand il faut trop chaud dehors
+  id: '1513505624852'
+  trigger:
+  - minutes: '/5'
+    seconds: '00'
+    platform: time
+  condition:
+  - above: '18'
+    condition: numeric_state
+    entity_id: sensor.yr_temperature
