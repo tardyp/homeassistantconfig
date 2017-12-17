@@ -25,6 +25,18 @@ influxdb:
 
 sensor:
 # Weather Prediction
+  - platform: yweather
+    scan_interval: 120
+    monitored_conditions:
+      - weather
+      - weather_current
+      - temp_min
+      - temp_max
+      - wind_speed
+      - pressure
+      - visibility
+      - humidity
+      - temperature
   - platform: yr
     scan_interval: 120
   - platform: ha02
