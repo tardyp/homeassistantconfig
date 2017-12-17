@@ -1,1 +1,13 @@
-[]
+- action:
+  - data:
+      entity_id: switch.chauffage
+    service: switch.turn_on
+  alias: Allumer chauffage
+  condition:
+  - below: '15'
+    condition: numeric_state
+    entity_id: sensor.yr_temperature
+  id: '1513505624850'
+  trigger:
+  - at: '11:36:00'
+    platform: time
